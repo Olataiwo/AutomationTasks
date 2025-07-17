@@ -112,3 +112,4 @@ C:\Users\TaiwoD\source\playground\RestAPiProject\obj\Debug\net6.0\refint\RestAPi
 C:\Users\TaiwoD\source\playground\RestAPiProject\obj\Debug\net6.0\RestAPiProject.pdb
 C:\Users\TaiwoD\source\playground\RestAPiProject\obj\Debug\net6.0\RestAPiProject.genruntimeconfig.cache
 C:\Users\TaiwoD\source\playground\RestAPiProject\obj\Debug\net6.0\ref\RestAPiProject.dll
+C:\Users\TaiwoD\source\playground\RestAPiProject\obj\Debug\net6.0\RestAPiProject.sourcelink.json
