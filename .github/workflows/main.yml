@@ -33,8 +33,9 @@ jobs:
       run: dotnet restore RestAPiProject/RestAPiProject.csproj
     - name:  Build RestAPi Project
       run: dotnet build RestAPiProject/RestAPiProject.csproj --configuration Release
-    - name: Install Playwright (.NET)
-      run: playwright install -p /home/runner/work/AutomationTasks/AutomationTasks/PresrvicaExercise/UiSignUpTest.csproj
+    - name: Install Playwright Browsers
+      run: playwright install
+      working-directory: PresrvicaExercise/UiSignUpTest
     - name: Run UI tests
       run: dotnet test PresrvicaExercise/UiSignUpTest.csproj --configuration Release --logger "trx;LogFileName=TestResults/ui-results.trx"
 
