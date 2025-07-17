@@ -33,7 +33,8 @@ jobs:
       run: dotnet restore RestAPiProject/RestAPiProject.csproj
     - name:  Build RestAPi Project
       run: dotnet build RestAPiProject/RestAPiProject.csproj --configuration Release
-    
+    - name: install playwright browser
+      run: Playwright install
     - name: Run UI tests
       run: dotnet test PresrvicaExercise/UiSignUpTest.csproj --configuration Release --logger "trx;LogFileName=TestResults/ui-results.trx"
 
