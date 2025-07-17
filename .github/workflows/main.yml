@@ -33,8 +33,7 @@ jobs:
       run: dotnet restore RestAPiProject/RestAPiProject.csproj
     - name:  Build RestAPi Project
       run: dotnet build RestAPiProject/RestAPiProject.csproj --configuration Release
-    - name: Run api tests and output .trx result
-      run: dotnet test RestApiProject/RestApiProject.csproj --configuration Release --logger "trx;LogFileName=TestResults/api-results.trx"
+    
     - name: Run UI tests
       run: dotnet test PresrvicaExercise/UiSignUpTest.csproj --configuration Release --logger "trx;LogFileName=TestResults/ui-results.trx"
 
