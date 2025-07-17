@@ -1,4 +1,4 @@
-name: Tests
+name: 🔁 CI - REST API + UI Tests
 
 on:
   pull_request:
@@ -6,48 +6,56 @@ on:
       - main
 
 jobs:
-  build-test:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: 📥 Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup .NET
+    - name: ⚙️ Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
 
-    - name: Install Playwright CLI
+    - name: 📦 Install Playwright CLI for .NET
       run: dotnet tool install --global Microsoft.Playwright.CLI
-    - name: Build playwright driver
-      run: dotnet build PresrvicaExercise/UiSignUpTest.csproj --configuration Release
-    - name: Install Playwright
-      run: dotnet test PresrvicaExercise/UiSignUpTest.csproj --list-tests > /dev/null
 
-    - name: Install ReportGenerator
+    - name: 📦 Install ReportGenerator
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
-     
-    - name: Restore dependencies for RestAPi Project
-      run: dotnet restore RestAPiProject/RestAPiProject.csproj
-    - name:  Build RestAPi Project
-      run: dotnet build RestAPiProject/RestAPiProject.csproj --configuration Release
-    - name: Install Playwright Browsers
-      run: playwright install -p PresrvicaExercise/UiSignUpTest.csproj
+    # ✅ UI Test Setup (Playwright)
+    - name: 🏗 Build UI Test Project
+      run: dotnet build PresrvicaExercise/UiSignUpTest.csproj --configuration Release
 
-    - name: Run UI tests
+    - name: 🌐 Install Playwright Browsers via .NET Test
+      run: dotnet test PresrvicaExercise/UiSignUpTest.csproj --list-tests > /dev/null
+
+    # ✅ API Project Setup
+    - name: 🔧 Restore dependencies (REST API Project)
+      run: dotnet restore RestAPiProject/RestAPiProject.csproj
+
+    - name: 🏗 Build REST API Project
+      run: dotnet build RestAPiProject/RestAPiProject.csproj --configuration Release
+
+    # ✅ Run Tests
+    - name: 🧪 Run UI Tests
       run: dotnet test PresrvicaExercise/UiSignUpTest.csproj --configuration Release --logger "trx;LogFileName=TestResults/ui-results.trx"
 
-    - name: Generate HTML test report
+    - name: 🧪 Run REST API Tests
+      run: dotnet test RestAPiProject/RestAPiProject.csproj --configuration Release --logger "trx;LogFileName=TestResults/api-results.trx"
+
+    # ✅ Generate and Upload Reports
+    - name: 📊 Generate HTML Report
       run: |
         reportgenerator \
           -reports:**/TestResults/*.trx \
           -targetdir:TestResults/Report \
           -reporttypes:Html
 
-    - name: Upload HTML report as artifact
+    - name: 📤 Upload HTML Report as Artifact
       uses: actions/upload-artifact@v4
       with:
         name: TestReport
         path: TestResults/Report
+
