@@ -32,11 +32,16 @@ jobs:
           sudo dpkg -i packages-microsoft-prod.deb
           sudo apt-get update
           sudo apt-get install -y powershell
-
+   
     - name: Install ReportGenerator
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
-
-     
+    - name: Build playwright driver
+      run: dotnet build PresrvicaExercise/UiSignUpTest.csproj --configuration Release
+    - name: Ensure browsers are installed
+      run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+    - name: Build playwright driver
+      run: dotnet test PresrvicaExercise/UiSignUpTest.csproj --configuration Release
+    
     - name: Restore dependencies for RestAPi Project
       run: dotnet restore RestAPiProject/RestAPiProject.csproj
     - name:  Build RestAPi Project
